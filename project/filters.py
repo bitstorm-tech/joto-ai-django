@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 
-def pencil_sketch(image_path):
+def pencil_sketch(image_path: str, output_path: str):
     # Read the image
     img = cv2.imread(image_path)
 
@@ -27,6 +27,10 @@ def pencil_sketch(image_path):
 
     # Blend edges with sketch
     result = cv2.addWeighted(pencil_sketch, 0.8, edges, 0.2, 0)
+
+    # Save if output path is provided
+    if output_path:
+        cv2.imwrite(output_path, result)
 
     return result
 

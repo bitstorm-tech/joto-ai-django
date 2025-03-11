@@ -1,9 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dim">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0/themes.css" rel="stylesheet" type="text/css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0/themes.css"
+      rel="stylesheet"
+      type="text/css"
+    />
     <link
       href="https://cdn.jsdelivr.net/npm/daisyui@5"
       rel="stylesheet"
@@ -13,20 +17,88 @@
     <title>JoTa AI Image</title>
   </head>
   <body class="m-8">
-    <h1 class="text-red-500">Hallo du da...ibims!</h1>
-    <fieldset
-      class="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box"
-    >
-      <legend class="fieldset-legend">Page details</legend>
+    <div class="mt-8 mb-8">
+      <!-- Image Preview Section -->
+      <div class="mb-6">
+        {% if uploaded_image %}
+        <div class="mb-4">
+          <h3 class="text-lg mb-2">Uploaded Image:</h3>
+          <img
+            src="{{ uploaded_image }}"
+            alt="Uploaded Image"
+            class="max-w-lg border border-base-300 rounded-lg"
+          />
+        </div>
+        {% endif %}
 
-      <label class="fieldset-label">Title</label>
-      <input type="text" class="input" placeholder="My awesome page" />
+        <div id="imagePreviewContainer" class="hidden mb-4">
+          <h3 class="text-lg mb-2">Selected Image Preview:</h3>
+          <img
+            id="imagePreview"
+            src="#"
+            alt="Selected Image"
+            class="max-w-lg border border-base-300 rounded-lg"
+          />
+        </div>
+      </div>
 
-      <label class="fieldset-label">Slug</label>
-      <input type="text" class="input" placeholder="my-awesome-page" />
+      <!-- Image Selection Form -->
+      <div class="mb-4">
+        <input
+          type="file"
+          id="imageInput"
+          accept="image/*"
+          class="hidden"
+          onchange="previewImage(this);"
+        />
+        <button
+          onclick="document.getElementById('imageInput').click();"
+          class="btn btn-primary mr-4"
+        >
+          Bild wählen
+        </button>
+      </div>
 
-      <label class="fieldset-label">Author</label>
-      <input type="text" class="input" placeholder="Name" />
-    </fieldset>
+      <!-- Upload Form -->
+      <form
+        action=""
+        method="post"
+        enctype="multipart/form-data"
+        id="uploadForm"
+      >
+        {% csrf_token %}
+        <input type="file" name="image" id="uploadInput" class="hidden" />
+        <button type="submit" class="btn btn-accent" id="uploadButton" disabled>
+          Filter anwenden
+        </button>
+      </form>
+    </div>
+
+    <script>
+      function previewImage(input) {
+        if (input.files && input.files[0]) {
+          const reader = new FileReader();
+
+          reader.onload = function (e) {
+            // Show the preview
+            document.getElementById("imagePreview").src = e.target.result;
+            document
+              .getElementById("imagePreviewContainer")
+              .classList.remove("hidden");
+
+            // Enable the upload button
+            document.getElementById("uploadButton").disabled = false;
+
+            // Copy the file to the upload form
+            const uploadInput = document.getElementById("uploadInput");
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(input.files[0]);
+            uploadInput.files = dataTransfer.files;
+          };
+
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+    </script>
   </body>
 </html>

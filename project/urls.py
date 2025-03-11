@@ -17,9 +17,9 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from . import views
+from .filter_view import FilterView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", views.index),
+    path("", FilterView.as_view()),
 ]

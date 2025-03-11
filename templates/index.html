@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="dim">
   <head>
     <meta charset="UTF-8" />
@@ -18,30 +18,6 @@
   </head>
   <body class="m-8">
     <div class="mt-8 mb-8">
-      <!-- Image Preview Section -->
-      <div class="mb-6">
-        {% if uploaded_image %}
-        <div class="mb-4">
-          <h3 class="text-lg mb-2">Uploaded Image:</h3>
-          <img
-            src="{{ uploaded_image }}"
-            alt="Uploaded Image"
-            class="max-w-lg border border-base-300 rounded-lg"
-          />
-        </div>
-        {% endif %}
-
-        <div id="imagePreviewContainer" class="hidden mb-4">
-          <h3 class="text-lg mb-2">Selected Image Preview:</h3>
-          <img
-            id="imagePreview"
-            src="#"
-            alt="Selected Image"
-            class="max-w-lg border border-base-300 rounded-lg"
-          />
-        </div>
-      </div>
-
       <!-- Image Selection Form -->
       <div class="mb-4">
         <input
@@ -72,6 +48,30 @@
           Filter anwenden
         </button>
       </form>
+    </div>
+
+    <!-- Image Preview Section -->
+    <div class="mb-6">
+      {% if uploaded_image %}
+      <div class="mb-4">
+        <h3 class="text-lg mb-2">Uploaded Image:</h3>
+        <img
+          src="{{ uploaded_image }}"
+          alt="Uploaded Image"
+          class="max-w-lg border border-base-300 rounded-lg"
+        />
+      </div>
+      {% endif %}
+
+      <div id="imagePreviewContainer" class="hidden mb-4">
+        <h3 class="text-lg mb-2">Selected Image Preview:</h3>
+        <img
+          id="imagePreview"
+          src="#"
+          alt="Selected Image"
+          class="max-w-lg border border-base-300 rounded-lg"
+        />
+      </div>
     </div>
 
     <script>
